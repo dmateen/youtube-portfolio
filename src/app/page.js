@@ -16,6 +16,9 @@ async function getData() {
     console.log("==== url", url);
 
     if (!res.ok) {
+      console.error("Response status:", res.status, res.statusText);
+      const errorText = await res.text();
+      console.error("Response text:", errorText);
       throw new Error("Failed to fetch data");
     }
 
