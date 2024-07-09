@@ -7,30 +7,11 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { url } from "@/utils/urls";
 import { formatNumber } from "@/utils/common";
-
-async function getData() {
-  try {
-    const res = await fetch(`${url}/fetch-youtube-data`);
-    console.log("==== url", url);
-
-    if (!res.ok) {
-      console.error("Response status:", res.status, res.statusText);
-      const errorText = await res.text();
-      console.error("Response text:", errorText);
-      throw new Error("Failed to fetch data");
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return [];
-  }
-}
+import { fetchYoutubeData } from "./actions/fetchYoutubeData";
 
 export default async function Page() {
-  const data = await getData();
+  const data = await fetchYoutubeData();
 
   return (
     <main>

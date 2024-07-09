@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+// app/actions/fetchYoutubeData.js
+
+import { youtubePortfolioLinks } from "@/utils/constants/yt-links";
 import { google } from "googleapis";
-import { youtubePortfolioLinks } from "./links";
 
 const API_KEY = process.env.YOUTUBE_DEV;
 
@@ -28,7 +29,7 @@ async function getVideoDetails(videoId) {
   return null;
 }
 
-export async function GET() {
+export async function fetchYoutubeData() {
   try {
     const links = youtubePortfolioLinks;
     const videoData = [];
@@ -52,11 +53,9 @@ export async function GET() {
     }
 
     videoData.sort((a, b) => b.views - a.views);
-    return NextResponse.json(videoData, { status: 200 });
+    return videoData;
   } catch (error) {
-    return NextResponse.json(
-      { error: "Error processing links" },
-      { status: 500 }
-    );
+    console.error("Error processing links", error);
+    throw new Error("Error processing links");
   }
 }
