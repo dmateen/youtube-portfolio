@@ -13,6 +13,7 @@ import { formatNumber } from "@/utils/common";
 async function getData() {
   try {
     const res = await fetch(`${url}/fetch-youtube-data`);
+    console.log("==== url", url);
 
     if (!res.ok) {
       throw new Error("Failed to fetch data");
