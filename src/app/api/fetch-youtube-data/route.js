@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
 import { youtubePortfolioLinks } from "./links";
+import Cors from "cors";
 
 const API_KEY = process.env.YOUTUBE_DEV;
 
@@ -8,6 +9,23 @@ const youtube = google.youtube({
   version: "v3",
   auth: API_KEY,
 });
+
+// Initialize the cors middleware
+const cors = Cors({
+  methods: ["GET", "HEAD"],
+  origin: "*", // You can specify specific origins instead of '*'
+});
+
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+      return resolve(result);
+    });
+  });
+}
 
 async function getVideoDetails(videoId) {
   try {
@@ -28,7 +46,9 @@ async function getVideoDetails(videoId) {
   return null;
 }
 
-export async function GET() {
+export async function GET(req, res) {
+  await runMiddleware(req, res, cors);
+
   try {
     const links = youtubePortfolioLinks;
     const videoData = [];
