@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+"use server";
+// app/actions/fetchYoutubeData.js
+
+import { youtubePortfolioLinks } from "@/utils/constants/yt-links";
 import { google } from "googleapis";
-import { youtubePortfolioLinks } from "./links";
-import Cors from "cors";
 
 const API_KEY = process.env.YOUTUBE_DEV;
 
@@ -9,23 +10,6 @@ const youtube = google.youtube({
   version: "v3",
   auth: API_KEY,
 });
-
-// Initialize the cors middleware
-const cors = Cors({
-  methods: ["GET", "HEAD"],
-  origin: "*", // You can specify specific origins instead of '*'
-});
-
-function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-      return resolve(result);
-    });
-  });
-}
 
 async function getVideoDetails(videoId) {
   try {
@@ -46,9 +30,7 @@ async function getVideoDetails(videoId) {
   return null;
 }
 
-export async function GET(req, res) {
-  await runMiddleware(req, res, cors);
-
+export async function fetchYoutubeData() {
   try {
     const links = youtubePortfolioLinks;
     const videoData = [];
@@ -72,11 +54,9 @@ export async function GET(req, res) {
     }
 
     videoData.sort((a, b) => b.views - a.views);
-    return NextResponse.json(videoData, { status: 200 });
+    return videoData;
   } catch (error) {
-    return NextResponse.json(
-      { error: "Error processing links" },
-      { status: 500 }
-    );
+    console.error("Error processing links", error);
+    throw new Error("Error processing links");
   }
 }

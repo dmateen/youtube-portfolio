@@ -7,31 +7,16 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { url } from "@/utils/urls";
 import { formatNumber } from "@/utils/common";
+import { fetchYoutubeData } from "./actions/fetchYoutubeData";
 
 async function getData() {
-  try {
-    const res = await fetch(`${url}/fetch-youtube-data`);
-    console.log("==== url", url);
-
-    if (!res.ok) {
-      console.error("Response status:", res.status, res.statusText);
-      const errorText = await res.text();
-      console.error("Response text:", errorText);
-      throw new Error("Failed to fetch data");
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return [];
-  }
+  const res = await fetchYoutubeData();
+  return res;
 }
 
 export default async function Page() {
   const data = await getData();
-
   return (
     <main>
       <Table>
@@ -61,6 +46,16 @@ export default async function Page() {
     </main>
   );
 }
+
+export const getServerSideProps = async () => {
+  const data = await fetchYoutubeData();
+
+  return {
+    props: {
+      data,
+    },
+  };
+};
 
 export const metadata = {
   title: "Youtube Portfolio",
