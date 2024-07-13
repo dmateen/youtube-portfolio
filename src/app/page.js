@@ -10,9 +10,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { formatNumber } from "@/utils/common";
 import { fetchYoutubeData } from "./actions/fetchYoutubeData";
 
-export default async function Page() {
-  const data = await fetchYoutubeData();
-
+export default function Page({ data }) {
   return (
     <main>
       <Table>
@@ -42,6 +40,16 @@ export default async function Page() {
     </main>
   );
 }
+
+export const getServerSideProps = async () => {
+  const data = await fetchYoutubeData();
+
+  return {
+    props: {
+      data,
+    },
+  };
+};
 
 export const metadata = {
   title: "Youtube Portfolio",

@@ -21,6 +21,14 @@ async function getVideoDetails(videoId) {
       const title = video.snippet.title;
       const channel = video.snippet.channelTitle;
       const views = video.statistics.viewCount;
+      console.log(
+        "=== ",
+        {
+          part: "snippet,statistics",
+          id: videoId,
+        },
+        { title, channel, views }
+      );
       return { title, channel, views };
     }
   } catch (error) {
