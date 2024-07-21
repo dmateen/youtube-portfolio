@@ -22,6 +22,7 @@ async function getData() {
       "Cache-Control": "no-cache",
       Pragma: "no-cache",
     },
+    cache: "no-store", // Ensure this option is properly applied
   });
 
   if (!res.ok) {
@@ -49,7 +50,7 @@ export default async function Page() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.title}</TableCell>
               <TableCell>{item.channel}</TableCell>
