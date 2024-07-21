@@ -8,11 +8,31 @@ import {
 } from "@/components/ui/table";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { formatNumber } from "@/utils/common";
-import { fetchYoutubeData } from "./actions/fetchYoutubeData";
+import { api_url } from "@/utils/urls";
 
 async function getData() {
-  const res = await fetchYoutubeData();
-  return res;
+  "use server";
+
+  const apiUrl = `${api_url}/youtube-links?cache_bust=${new Date().getTime()}`;
+  const res = await fetch(apiUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      "Content-Type": "application/json",
+      "Cache-Control": "no-cache",
+      Pragma: "no-cache",
+    },
+  });
+
+  if (!res.ok) {
+    console.error("Error fetching data", res.statusText);
+    return null;
+  }
+
+  // Extract the JSON data from the response
+  const data = await res.json();
+
+  return data?.videoDetails;
 }
 
 export default async function Page() {
@@ -46,16 +66,6 @@ export default async function Page() {
     </main>
   );
 }
-
-export const getServerSideProps = async () => {
-  const data = await fetchYoutubeData();
-
-  return {
-    props: {
-      data,
-    },
-  };
-};
 
 export const metadata = {
   title: "Youtube Portfolio",
