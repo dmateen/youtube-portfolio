@@ -18,11 +18,11 @@ async function getData() {
     method: "GET",
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-      "Content-Type": "application/json",
-      "Cache-Control": "no-cache",
-      Pragma: "no-cache",
+      // "Content-Type": "application/json",
+      // "Cache-Control": "no-cache",
+      // Pragma: "no-cache",
     },
-    cache: "no-store", // Ensure this option is properly applied
+    // cache: "no-store", // Ensure this option is properly applied
   });
 
   if (!res.ok) {
