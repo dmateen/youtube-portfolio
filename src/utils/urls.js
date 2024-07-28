@@ -6,4 +6,5 @@ export const url =
 export const api_url =
   process?.env?.VERCEL_ENV === "production"
     ? process.env.PROD_STRAPI_URL
-    : process.env.LOCAL_STRAPI_URL;
+    : process.env.PROD_STRAPI_URL;
+// process.env.LOCAL_STRAPI_URL;

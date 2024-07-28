@@ -1,79 +1,11 @@
-import {
-  TableBody,
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableCell,
-} from "@/components/ui/table";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import TableSection from "@/components/ui/landingPage/tableSection";
 import { formatNumber } from "@/utils/common";
 import { api_url } from "@/utils/urls";
-
-async function getData() {
-  "use server";
-
-  const apiUrl = `${api_url}/youtube-links-data`;
-  const res = await fetch(apiUrl, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-      "Content-Type": "application/json",
-      "Cache-Control": "no-cache",
-      Pragma: "no-cache",
-    },
-    cache: "no-store", // Ensure this option is properly applied
-  });
-
-  if (!res.ok) {
-    console.error("Error fetching data", res.statusText);
-    return null;
-  }
-
-  // Extract the JSON data from the response
-  const data = await res.json();
-
-  const videoDetails = data?.data?.map((item) => {
-    return { ...item?.attributes };
-  });
-
-  return videoDetails;
-}
+import { getYoutubeData } from "./api/getYoutubeData";
 
 export default async function Page() {
-  const data = await getData();
-  return (
-    <main>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Channel Name</TableHead>
-            <TableHead>Views</TableHead>
-            <TableHead>Link</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data?.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell>{item?.youtube_video_title}</TableCell>
-              <TableCell>{item?.youtube_channel_name}</TableCell>
-              <TableCell>{formatNumber(item?.youtube_views)}</TableCell>
-              <TableCell>
-                <a
-                  href={item?.youtube_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaExternalLinkAlt />
-                </a>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </main>
-  );
+  const response = await getYoutubeData();
+  return <TableSection data={response} />;
 }
 
 export const metadata = {
