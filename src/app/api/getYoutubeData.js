@@ -1,6 +1,5 @@
 import { api_url } from "@/utils/urls";
 
-
 export async function getYoutubeData() {
   "use server";
 
@@ -10,10 +9,10 @@ export async function getYoutubeData() {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       "Content-Type": "application/json",
-      "Cache-Control": "no-cache",
-      Pragma: "no-cache",
+      // "Cache-Control": "no-cache",
+      // Pragma: "no-cache",
     },
-    cache: "no-store", // Ensure this option is properly applied
+    // cache: "no-store", // Ensure this option is properly applied
   });
 
   if (!res.ok) {
