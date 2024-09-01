@@ -5,6 +5,9 @@ const nextConfig = {
       fullUrl: true,
     },
   },
+  images: {
+    domains: ["i.ytimg.com", "assets.aceternity.com"],
+  },
 };
 
 export default nextConfig;
