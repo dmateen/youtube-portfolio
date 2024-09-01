@@ -5,19 +5,24 @@ import HeroCTA from "./heroCTA";
 const words = [
   {
     text: "One\u00A0Script",
+    className: "text-xl sm:text-5xl md:text-3xl lg:text-4xl xl:text-5xl", // Adjust font size based on screen size
   },
   {
     text: "\u00A0away ",
+    className: "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl",
   },
   {
     text: "\u00A0from",
+    className: "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl",
   },
   {
     text: "\u00A01\u00A0Million",
-    className: "text-blue-500 dark:text-red-500",
+    className:
+      "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-blue-500 dark:text-red-500",
   },
   {
     text: "\u00A0Views?",
+    className: "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl",
   },
 ];
 const Hero = () => {

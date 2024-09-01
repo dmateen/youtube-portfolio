@@ -28,7 +28,7 @@ const Portfolio = ({ data }) => {
 
   return (
     <div className="w-full h-full py-20 dark:bg-neutral-950 " id="our-work">
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-8">
+      <h2 className="max-w-7xl pl-4 mx-auto text-4xl md:text-5xl ld:text-xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-8 sm:text-5xl md:ml-4">
         Our Work in Action..
       </h2>
       <VideosList cards={cards?.slice(0, 10)} />
