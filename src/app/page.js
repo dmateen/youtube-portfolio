@@ -22,7 +22,6 @@ import Contact from "@/components/custom/contact";
 
 export default async function Page() {
   const response = await getYoutubeData();
-  console.log("=== response", response);
 
   return (
     <>

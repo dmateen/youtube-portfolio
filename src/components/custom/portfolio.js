@@ -3,7 +3,6 @@ import { VideosList } from "./videosList";
 import { formatNumberWithCommas } from "@/app/utils/utility";
 
 const Portfolio = ({ data }) => {
-  console.log("=== data", data);
   const cards = data?.map((item) => ({
     description:
       item.youtube_channel_name +

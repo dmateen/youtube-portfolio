@@ -13,7 +13,6 @@ export function NavBar() {
 
 function Navbar({ className }) {
   const [active, setActive] = useState(null);
-  console.log("=== active", active);
   return (
     <div
       className={cn(

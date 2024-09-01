@@ -18,7 +18,6 @@ export const MenuItem = ({ setActive, active, item, children, href }) => {
     <div
       onClick={() => {
         setActive(item);
-        console.log("=== href", href);
         const section = document.getElementById(href);
         section.scrollIntoView({ behavior: "smooth" });
       }}
